@@ -1,7 +1,6 @@
 package com.pokemonreview.api.controllers;
 
 import com.pokemonreview.api.dto.ReviewDto;
-import com.pokemonreview.api.models.Review;
 import com.pokemonreview.api.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ public class ReviewController {
     }
 
     @PostMapping("/pokemon/{pokemonId}/review")
-    public ResponseEntity<ReviewDto> createReview(@PathVariable(value = "pokemonId") int pokemonId, @RequestBody ReviewDto reviewDto){
+    public ResponseEntity<ReviewDto> createReviewAndTest(@PathVariable(value = "pokemonId") int pokemonId, @RequestBody ReviewDto reviewDto){
         return new ResponseEntity<>(reviewService.createReview(pokemonId, reviewDto), HttpStatus.CREATED);
     }
 
