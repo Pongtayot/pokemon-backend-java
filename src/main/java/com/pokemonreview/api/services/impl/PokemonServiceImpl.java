@@ -4,6 +4,7 @@ import com.pokemonreview.api.dto.PokemonDto;
 import com.pokemonreview.api.dto.PokemonResponse;
 import com.pokemonreview.api.exceptions.PokemonNotFoundException;
 import com.pokemonreview.api.models.Pokemon;
+import com.pokemonreview.api.repositorys.Custom;
 import com.pokemonreview.api.repositorys.PokemonRepository;
 import com.pokemonreview.api.services.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,12 @@ import java.util.stream.Collectors;
 public class PokemonServiceImpl implements PokemonService {
     private final PokemonRepository pokemonRepository;
 
+    private final Custom custom;
+
     @Autowired
-    public PokemonServiceImpl(PokemonRepository pokemonRepository) {
+    public PokemonServiceImpl(PokemonRepository pokemonRepository, Custom custom) {
         this.pokemonRepository = pokemonRepository;
+        this.custom = custom;
     }
 
     @Override
@@ -76,6 +80,11 @@ public class PokemonServiceImpl implements PokemonService {
     public void deletePokemon(int id) {
         Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() -> new PokemonNotFoundException("Pokemon could not be delete!"));
         pokemonRepository.delete(pokemon);
+    }
+
+    @Override
+    public List<Pokemon> getPokemonByCriteria(String name) {
+        return custom.findByCriteria(name);
     }
 
 
